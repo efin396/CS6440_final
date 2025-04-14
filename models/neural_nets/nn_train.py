@@ -10,19 +10,18 @@ https://www.tensorflow.org/decision_forests
 import tensorflow as tf
 import neural_structured_learning as nsl
 import pandas as pd
+from models.compile_data import train_df, test_df
 
 MODEL_OUTPUT_PATH = "./nn_model"
 TRAIN_DATA = "../data/train" # TODO: Update this path with actual data
 TEST_DATA = "../data/test" #TODO: Update this path with actual data
 
-train = pd.read_csv(TRAIN_DATA).to_numpy()
-test = pd.read_csv(TEST_DATA).to_numpy()
 
 # TODO: Update number of labels
 
-input_shape = (1,) # TODO: Update based on number of features
-x_train, y_train = None, None
-x_test, y_test = None, None
+input_shape = (train_df.shape[1],)  # TODO: Update based on number of features
+x_train, y_train = train_df.drop(columns=['DEPENDENT']), train_df['DEPENDENT']
+x_test, y_test = test_df.drop(columns=['DEPENDENT']), test_df['DEPENDENT']
 
 model = tf.keras.Sequential(
     tf.keras.Input(input_shape),
