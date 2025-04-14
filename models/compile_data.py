@@ -12,8 +12,8 @@ TRAIN_DATA = "../data/train" # TODO: Update this path with actual data
 TEST_DATA = "../data/test" #TODO: Update this path with actual data
 
 # Step 1: Import patients data and conditions data
-PATIENTS = '../data/csv/patients.csv'
-CONDITIONS = '../data/csv/conditions.csv'
+PATIENTS = '../csv/combined_patients.csv'
+CONDITIONS = '../csv/combined_conditions.csv'
 
 patients = pd.read_csv(PATIENTS)
 conditions = pd.read_csv(CONDITIONS)
