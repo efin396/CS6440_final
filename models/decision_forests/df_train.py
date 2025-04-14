@@ -14,10 +14,10 @@ from tensorflow_decision_forests.keras import (
 )
 from models.compile_data import test_df, train_df
 
-MODEL_OUTPUT_PATH = "./df_model"
+MODEL_OUTPUT_PATH = "./df_model/model.keras"
 
-training = pd_dataframe_to_tf_dataset(train_df, label="DEPENDENT") #TODO: Update with real label
-testing = pd_dataframe_to_tf_dataset(test_df, label="DEPENDENT") #TODO: Update with real label
+training = pd_dataframe_to_tf_dataset(train_df, label="DEPENDENT")
+testing = pd_dataframe_to_tf_dataset(test_df, label="DEPENDENT")
 
 model = RandomForestModel()
 model.fit(training)

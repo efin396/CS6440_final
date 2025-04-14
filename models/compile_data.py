@@ -7,20 +7,18 @@ from tensorflow_decision_forests.keras import (
 )
 from sklearn.model_selection import train_test_split
 
-MODEL_OUTPUT_PATH = "./df_model"
-TRAIN_DATA = "../data/train" # TODO: Update this path with actual data
-TEST_DATA = "../data/test" #TODO: Update this path with actual data
+MODEL_OUTPUT_PATH = "./models/decision_forests/df_model"
 
 # Step 1: Import patients data and conditions data
-PATIENTS = '../csv/combined_patients.csv'
-CONDITIONS = '../csv/combined_conditions.csv'
+PATIENTS = '/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/data/csv/combined_patients.csv'
+CONDITIONS = '/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/data/csv/combined_conditions.csv'
 
 patients = pd.read_csv(PATIENTS)
 conditions = pd.read_csv(CONDITIONS)
 
 # Step 2: determine which fields you want to cherrypick from each dataset
 patients_columns = [
-    'id',
+    'Id',
     'BIRTHDATE',
     'DEATHDATE',
     'MARITAL',
@@ -32,7 +30,7 @@ patients_columns = [
 
 # Step 3: Select columns for combination
 master_df = patients[patients_columns]
-opiate_dependent = conditions[conditions['CODE'] in [55680006, 6525002]]  # This code signifies drug overdose risk
+opiate_dependent = conditions[conditions['CODE'].isin([55680006, 6525002])]  # This code signifies drug overdose risk
 
 master_df['DEATHDATE'].fillna(pd.to_datetime(date.today()), inplace=True)
 
@@ -44,6 +42,10 @@ master_df.drop(columns=['BIRTHDATE', 'DEATHDATE'], inplace=True)
 
 opiate_ids = set(opiate_dependent['PATIENT'])
 
-master_df['DEPENDENT'] = master_df['id'].isin(opiate_ids).astype(int)
+master_df['DEPENDENT'] = master_df['Id'].isin(opiate_ids).astype(int)
+
+master_df['MARITAL'].fillna('N', inplace=True)
+
+master_df.drop(columns=['Id'], inplace=True)
 
 train_df, test_df = train_test_split(master_df, test_size=0.2, random_state=143)
