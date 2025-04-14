@@ -32,7 +32,7 @@ patients_columns = [
 
 # Step 3: Select columns for combination
 master_df = patients[patients_columns]
-opiate_dependent = conditions[conditions['CODE'] == 55680006]  # This code signifies drug overdose risk
+opiate_dependent = conditions[conditions['CODE'] in [55680006, 6525002]]  # This code signifies drug overdose risk
 
 master_df['DEATHDATE'].fillna(pd.to_datetime(date.today()), inplace=True)
 
