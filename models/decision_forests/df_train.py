@@ -23,6 +23,7 @@ model = RandomForestModel()
 model.fit(training)
 
 model.compile(metrics=['accuracy'])
-model.evaluate(testing, return_dict=True)
+results = model.evaluate(testing, return_dict=True)
+print(results)
 
 model.save(MODEL_OUTPUT_PATH)
