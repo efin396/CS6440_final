@@ -46,9 +46,11 @@ y_pred = (y_pred >= 0.5).astype(int)
 cm = confusion_matrix(y_true, y_pred)
 plt.figure(figsize=(6, 6))
 sns.heatmap(cm, annot=True, fmt=",", cmap=sns.color_palette("icefire", as_cmap=True))
-plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Random Forest Confusion Matrix")
 plt.tight_layout()
-plt.savefig('/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/imgs/confusion_matrix.png')
+plt.savefig('/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/imgs/df_confusion_matrix.png')
 plt.close()
 
 # Classification report

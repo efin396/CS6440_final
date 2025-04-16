@@ -8,6 +8,10 @@ https://www.tensorflow.org/decision_forests
 """
 
 import tensorflow as tf
+from matplotlib import pyplot as plt
+from sklearn.metrics import confusion_matrix, classification_report
+import seaborn as sns
+import dataframe_image as dfi
 from models.compile_data import train_df, test_df
 import pandas as pd
 
@@ -52,7 +56,29 @@ model.fit(
     validation_data=(x_test, y_test)
 )
 
-model.evaluate(x_test, y_test)
+results = model.evaluate(x_test, y_test)
+print(results)
+
+# Confusion matrix
+y_true = test_df["DEPENDENT"]
+y_pred = model.predict(x_test).flatten()
+y_pred = (y_pred >= 0.5).astype(int)
+
+cm = confusion_matrix(y_true, y_pred)
+plt.figure(figsize=(6, 6))
+sns.heatmap(cm, annot=True, fmt=",", cmap=sns.color_palette("icefire", as_cmap=True))
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Dense Neural Network Confusion Matrix")
+plt.tight_layout()
+plt.savefig('/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/imgs/nn_confusion_matrix.png')
+plt.close()
+
+# Classification report
+target_names = ['Not Opiod Dependent', 'Opiod Dependent']
+cr = classification_report(y_true, y_pred, output_dict=True, target_names=target_names)
+report_df = pd.DataFrame(cr).transpose()
+dfi.export(report_df, '/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/imgs/report_nn.png')
 
 model.save(MODEL_OUTPUT_PATH)
 
