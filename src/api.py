@@ -28,10 +28,12 @@ class InputData(BaseModel):
 
 @app.post('/inference_df')
 def inference_df(payload: InputData):
-    df = pd.DataFrame(payload.data)
-    probs = dforest.predict(df)
-    return {"predictions": probs.tolist()}
-
+    try:
+        df = pd.DataFrame(payload.data)
+        probs = dforest.predict(df)
+        return {"predictions": probs.tolist()}
+    except Exception as e:
+        return {"error": str(e)}
 @app.post('/inference_nnet')
 def inference_nn(payload: InputData):
     df = pd.DataFrame(payload.data)
