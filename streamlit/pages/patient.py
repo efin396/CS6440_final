@@ -9,6 +9,9 @@ import datetime
 
 def preprocess_patient_for_model(patient, conditions):
 
+    if not isinstance(['MARITAL'], str):
+        patient['MARITAL'] = 'N'
+
     birthdate = pd.to_datetime(patient.get("BIRTHDATE"))
     deathdate = pd.to_datetime(datetime.date.today())
     age = (deathdate - birthdate).days // 365
@@ -47,8 +50,6 @@ def preprocess_patient_for_model(patient, conditions):
         int(chronic_pain),
         int(chronic_migraine),
         int(imapcted_molars),
-        int(dependent)
- 
     ]]
 
 def sanitize_json_compat(data):
@@ -72,7 +73,7 @@ def patient_risk_assessment():
     st.header(f"Patient: {patient['name']}")
 
     try:
-        conditions_df = pd.read_csv('/home/nor/Documents/Spring2025/Health_Info/Project/CS6440Project/data/csv/combined_conditions.csv')
+        conditions_df = pd.read_csv('/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/data/csv/combined_conditions.csv')
         input_data = preprocess_patient_for_model(patient, conditions_df)
         input_data = sanitize_json_compat(input_data)
         
