@@ -1,6 +1,7 @@
 import subprocess
 import streamlit as st
 import threading
+import os
 
 
 def start_fastapi():
