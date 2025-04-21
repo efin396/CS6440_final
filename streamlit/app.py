@@ -4,12 +4,10 @@ import threading
 
 
 def start_fastapi():
-    subprocess.run(["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"])
+    subprocess.Popen(["python", os.path.join("src", "app.py")])  # Start FastAPI
 
-# Start FastAPI in a separate thread
-fastapi_thread = threading.Thread(target=start_fastapi)
-fastapi_thread.daemon = True  # This makes the thread terminate when the main program ends
-fastapi_thread.start()
+start_fastapi()
+
 # Simulate session state login
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
