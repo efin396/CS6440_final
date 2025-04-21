@@ -73,7 +73,7 @@ def patient_risk_assessment():
     st.header(f"Patient: {patient['name']}")
 
     try:
-        conditions_df = pd.read_csv('/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/data/csv/combined_conditions.csv')
+        conditions_df = pd.read_csv('/home/nor/Documents/Spring2025/Health_Info/CS6440Project/data/csv/combined_conditions.csv')
         input_data = preprocess_patient_for_model(patient, conditions_df)
         input_data = sanitize_json_compat(input_data)
         
@@ -85,9 +85,60 @@ def patient_risk_assessment():
         )
         response.raise_for_status()
         prediction = response.json()
-
+        print(prediction)
+        score  = prediction['predictions'][0][0]
         st.markdown("### Overall Risk Assessment")
-        st.success(f"Predicted Risk Score: **{prediction}**")
+        if score < 0.2:
+            prediction = "Very Low Risk"
+            st.success(f"Predicted Risk Level: **{prediction}**")
+            low_risk_provider_msg = (
+                "Patient is assessed to have a low predicted risk for opioid-related complications.\n\n"
+                "This suggests that, with appropriate prescribing practices and patient education, opioid therapy may be a viable option.\n\n"
+                "Continue to follow standard monitoring protocols, assess for any emerging risk factors, and encourage open communication with the patient regarding medication use and potential side effects."
+            )
+            st.text(low_risk_provider_msg)
+        elif score < 0.4:
+            prediction  = "Low Risk"
+            st.info(f"Predicted Risk Level: **{prediction}**")
+            low_risk_provider_msg = (
+                "Patient is assessed to have a low predicted risk for opioid-related complications.\n\n"
+                "This suggests that, with appropriate prescribing practices and patient education, opioid therapy may be a viable option.\n\n"
+                "Continue to follow standard monitoring protocols, assess for any emerging risk factors, and encourage open communication with the patient regarding medication use and potential side effects."
+            )
+            st.text(low_risk_provider_msg)
+        elif score < 0.6:
+            prediction =  "Moderate Risk"
+            st.warning(f"Predicted Risk Level: **{prediction}**")
+            low_risk_provider_msg = (
+                "Patient is assessed to have a moderate predicted risk for opioid-related complications.\n\n"
+                "This suggests that, with appropriate prescribing practices and patient education, opioid therapy may be a viable option but take precautions are necessary.\n\n"
+                "Continue to follow standard monitoring protocols, assess for any emerging risk factors, and encourage open communication with the patient regarding medication use and potential side effects."
+            )
+            st.text(low_risk_provider_msg)
+        elif score < 0.9:
+            prediction =  "Moderate-High Risk"
+            st.warning(f"Predicted Risk Level: **{prediction}**")
+            moderate_risk_provider_msg = (
+                "Patient is assessed to have a moderate predicted risk for opioid-related complications.\n\n"
+                "Caution is advised when considering opioid therapy. Evaluate alternative pain management strategies where appropriate.\n\n"
+                "If opioids are prescribed, implement enhanced monitoring protocols, set clear treatment goals, and ensure the patient is educated on safe use, storage, and disposal."
+            )
+
+            st.text(moderate_risk_provider_msg)
+        else:
+            prediction = "High Risk"
+            st.error(f"Predicted Risk Level: **{prediction}**")
+
+            high_risk_provider_msg = (
+                "Patient is assessed to have a high predicted risk for opioid-related complications.\n\n"
+                "Opioid prescribing should generally be avoided unless absolutely necessary. Prioritize non-opioid pain management options and consider consulting a pain specialist.\n\n"
+                "If opioids must be used, strict monitoring, risk mitigation strategies, and frequent follow-up are essential. Document justification thoroughly and involve the patient in shared decision-making."
+            )
+
+            st.text(high_risk_provider_msg)
+
+        
+        
 
     except Exception as e:
             st.error(f"Failed to get prediction from API: {e}")
