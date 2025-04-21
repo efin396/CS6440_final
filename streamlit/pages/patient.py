@@ -73,7 +73,7 @@ def patient_risk_assessment():
     st.header(f"Patient: {patient['name']}")
 
     try:
-        conditions_df = pd.read_csv('/home/nor/Documents/Spring2025/Health_Info/CS6440Project/data/csv/combined_conditions.csv')
+        conditions_df = pd.read_csv('data/csv/combined_conditions.csv')
         input_data = preprocess_patient_for_model(patient, conditions_df)
         input_data = sanitize_json_compat(input_data)
         
