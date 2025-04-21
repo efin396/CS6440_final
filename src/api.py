@@ -17,8 +17,8 @@ import tf_keras
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-DF_MODEL_PATH = '/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/models/decision_forests/df_model'  #TODO: Update with model path
-NN_MODEL_PATH = '/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/models/neural_nets/nn_model/model.keras'  #TODO: Update with model path
+DF_MODEL_PATH = 'models/decision_forests/df_model'  #TODO: Update with model path
+NN_MODEL_PATH = 'models/neural_nets/nn_model/model.keras'  #TODO: Update with model path
 
 # Load the models for inference
 dforest = tf_keras.models.load_model(DF_MODEL_PATH)
