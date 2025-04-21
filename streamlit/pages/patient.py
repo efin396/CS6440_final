@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import math 
 import json
-FASTAPI_URL = "http://localhost:8000"
+FASTAPI_URL = "https://cs6440-final.onrender.com/"
 MODEL_ENDPOINT = "/inference_df"
 import datetime
 
