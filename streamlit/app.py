@@ -1,13 +1,5 @@
-import subprocess
 import streamlit as st
-import threading
-import os
 
-
-def start_fastapi():
-    subprocess.Popen(["python", os.path.join("src", "app.py")])  # Start FastAPI
-
-start_fastapi()
 
 # Simulate session state login
 if "logged_in" not in st.session_state:
