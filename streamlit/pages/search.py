@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def load_patients(csv_path="/Users/willferguson/Downloads/GT Spring 2025/CS 6440/CS6440Project/data/csv/combined_patients.csv"):
+def load_patients(csv_path="data/csv/combined_patients.csv"):
     df = pd.read_csv(csv_path)
     # Create full names from first and last name columns
     df['FIRST'] = df["FIRST"].str.replace('\d+', '', regex=True)
